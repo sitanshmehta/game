@@ -3,14 +3,20 @@ function love.load()
     tarzan = {}
     tarzan.x = 400
     tarzan.y = 200
-    tarzan.image = love.graphics.newImage("/sprites/Tarzan.png")
-    tarzan.spriteSheet = love.graphics.newImage('/sprites/Tarzan.png')
+    tarzan.spriteSheet = love.graphics.newImage("man.png")
 
-    tarzan.grid = anim8.newGrid(24, 36, tarzan.spriteSheet:getWidth(), tarzan.spriteSheet:getHeight())
+    tarzan.grid = anim8.newGrid(30, 10, tarzan.spriteSheet:getWidth(), tarzan.spriteSheet:getHeight())
     tarzan.animations = {}
-    tarzan.animations.down = anim8.newAnimation(tarzan.grid('1-4', 1), 0.5)
+    tarzan.animations.down = anim8.newAnimation(tarzan.grid('1-10', 2), 0.2)
 end
 
 function love.draw()
-    love.graphics.draw(tarzan.image, tarzan.x, tarzan.y)
+    for i = 1, 5 do
+        love.graphics.draw( tarzan.spriteSheet, 1, 150 )
+      end
+    -- tarzan.animations.down:draw(tarzan.spriteSheet, tarzan.x, tarzan.y, nil, 3)
 end
+
+-- function love.update(dt)
+--     tarzan.animations.down:update(dt)
+-- end
