@@ -1,22 +1,33 @@
-function love.load()
-    anim8 = require 'libraries/anim8' 
-    tarzan = {}
-    tarzan.x = 400
-    tarzan.y = 200
-    tarzan.spriteSheet = love.graphics.newImage("man.png")
+wf = require("libraries/windfield")
+require("player")
+require("ball")
 
-    tarzan.grid = anim8.newGrid(30, 10, tarzan.spriteSheet:getWidth(), tarzan.spriteSheet:getHeight())
-    tarzan.animations = {}
-    tarzan.animations.down = anim8.newAnimation(tarzan.grid('1-10', 2), 0.2)
+window_Height = 600
+window_Width = 800
+
+success = love.window.setMode(window_Width, window_Height)
+world = love.physics.newWorld(0, 9.8, true)
+function love.load()
+    Player:load()
+    Ball:load()
+
 end
 
 function love.draw()
-    for i = 1, 5 do
-        love.graphics.draw( tarzan.spriteSheet, 1, 150 )
-      end
-    -- tarzan.animations.down:draw(tarzan.spriteSheet, tarzan.x, tarzan.y, nil, 3)
+    Player:draw()
+    Ball:draw()
 end
 
--- function love.update(dt)
---     tarzan.animations.down:update(dt)
--- end
+function love.update(dt)
+    Player:update(dt) 
+    Ball:update(dt)
+ end
+
+function collide (ball, player)
+    if (ball.y == player.y) and (player.x <= ball.x) and (ball.x <= (player.x + width)) then
+        ball.y = player.y - 1
+        sound = love.audio.newSource("collide.mp3", "static")
+        love.audio.play(sound)
+        return true
+    end
+end
